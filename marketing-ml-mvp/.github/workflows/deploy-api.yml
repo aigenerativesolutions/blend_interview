@@ -1,0 +1,293 @@
+name: Deploy API to Production
+
+on:
+  workflow_dispatch:
+    inputs:
+      model_version:
+        description: 'Model version to deploy'
+        required: true
+        default: 'latest'
+        type: string
+      environment:
+        description: 'Deployment environment'
+        required: true
+        default: 'production'
+        type: choice
+        options:
+        - staging
+        - production
+  workflow_run:
+    workflows: ["ML Training Pipeline"]
+    types:
+      - completed
+    branches: [main]
+
+env:
+  PYTHON_VERSION: '3.10'
+  SERVICE_NAME: 'marketing-ml-api'
+  REGION: 'us-central1'
+
+jobs:
+  deploy-staging:
+    if: github.event.inputs.environment == 'staging' || github.event_name == 'workflow_run'
+    runs-on: ubuntu-latest
+    environment: staging
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download ML Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ml-artifacts
+          path: artifacts/
+
+      - name: Authenticate with GCP
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup Google Cloud SDK
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/setup-gcloud@v1
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Configure Docker for GCR
+        if: env.GCP_SA_KEY != ''
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          gcloud auth configure-docker
+
+      - name: Build and Push Docker Image
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          # Build image
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} .
+          docker build -t gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest .
+          
+          if [ "${{ env.GCP_SA_KEY }}" != "" ]; then
+            # Push to GCR
+            docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }}
+            docker push gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:latest
+          else
+            echo "⚠️ No GCP credentials, skipping Docker push"
+          fi
+
+      - name: Deploy to Cloud Run (Staging)
+        if: env.GCP_SA_KEY != ''
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          gcloud run deploy ${{ env.SERVICE_NAME }}-staging \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} \
+            --platform managed \
+            --region ${{ env.REGION }} \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 2Gi \
+            --cpu 2 \
+            --max-instances 5 \
+            --timeout 300 \
+            --set-env-vars API_HOST=0.0.0.0,API_PORT=8080,ENVIRONMENT=staging
+
+      - name: Get Staging URL
+        if: env.GCP_SA_KEY != ''
+        id: get-url
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          URL=$(gcloud run services describe ${{ env.SERVICE_NAME }}-staging --region ${{ env.REGION }} --format 'value(status.url)')
+          echo "staging_url=$URL" >> $GITHUB_OUTPUT
+          echo "🌐 Staging URL: $URL"
+
+      - name: Health Check - Staging
+        if: steps.get-url.outputs.staging_url != ''
+        run: |
+          echo "🏥 Running health check on staging..."
+          
+          # Wait for service to be ready
+          sleep 30
+          
+          # Health check
+          HEALTH_URL="${{ steps.get-url.outputs.staging_url }}/health"
+          
+          for i in {1..10}; do
+            if curl -f "$HEALTH_URL"; then
+              echo "✅ Health check passed"
+              break
+            else
+              echo "⏳ Health check attempt $i failed, retrying..."
+              sleep 10
+            fi
+            
+            if [ $i -eq 10 ]; then
+              echo "❌ Health check failed after 10 attempts"
+              exit 1
+            fi
+          done
+
+      - name: API Tests - Staging
+        if: steps.get-url.outputs.staging_url != ''
+        run: |
+          echo "🧪 Running API tests on staging..."
+          
+          API_URL="${{ steps.get-url.outputs.staging_url }}"
+          
+          # Test sample input endpoint
+          echo "Testing /model/sample-input..."
+          curl -f "$API_URL/model/sample-input" > /dev/null
+          
+          # Test model info endpoint
+          echo "Testing /model/info..."
+          curl -f "$API_URL/model/info" > /dev/null
+          
+          echo "✅ Basic API tests passed"
+
+  deploy-production:
+    needs: deploy-staging
+    if: github.event.inputs.environment == 'production' && needs.deploy-staging.result == 'success'
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download ML Artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: ml-artifacts
+          path: artifacts/
+
+      - name: Authenticate with GCP
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup Google Cloud SDK
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/setup-gcloud@v1
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Deploy to Cloud Run (Production)
+        if: env.GCP_SA_KEY != ''
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          # Deploy with traffic split for blue-green deployment
+          gcloud run deploy ${{ env.SERVICE_NAME }} \
+            --image gcr.io/${{ secrets.GCP_PROJECT_ID }}/${{ env.SERVICE_NAME }}:${{ github.sha }} \
+            --platform managed \
+            --region ${{ env.REGION }} \
+            --allow-unauthenticated \
+            --port 8080 \
+            --memory 4Gi \
+            --cpu 2 \
+            --max-instances 20 \
+            --timeout 300 \
+            --set-env-vars API_HOST=0.0.0.0,API_PORT=8080,ENVIRONMENT=production \
+            --no-traffic
+
+      - name: Gradual Traffic Split
+        if: env.GCP_SA_KEY != ''
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          echo "🚦 Starting gradual traffic split..."
+          
+          # Get the latest revision
+          LATEST_REVISION=$(gcloud run services describe ${{ env.SERVICE_NAME }} \
+            --region ${{ env.REGION }} \
+            --format 'value(status.latestReadyRevisionName)')
+          
+          # Split traffic gradually
+          echo "Directing 10% traffic to new revision..."
+          gcloud run services update-traffic ${{ env.SERVICE_NAME }} \
+            --region ${{ env.REGION }} \
+            --to-revisions $LATEST_REVISION=10
+          
+          # Wait and monitor
+          sleep 60
+          
+          echo "Directing 50% traffic to new revision..."
+          gcloud run services update-traffic ${{ env.SERVICE_NAME }} \
+            --region ${{ env.REGION }} \
+            --to-revisions $LATEST_REVISION=50
+          
+          # Final health check
+          sleep 60
+          
+          echo "Directing 100% traffic to new revision..."
+          gcloud run services update-traffic ${{ env.SERVICE_NAME }} \
+            --region ${{ env.REGION }} \
+            --to-revisions $LATEST_REVISION=100
+
+      - name: Get Production URL
+        if: env.GCP_SA_KEY != ''
+        id: get-prod-url
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          URL=$(gcloud run services describe ${{ env.SERVICE_NAME }} --region ${{ env.REGION }} --format 'value(status.url)')
+          echo "production_url=$URL" >> $GITHUB_OUTPUT
+          echo "🌐 Production URL: $URL"
+
+      - name: Final Health Check - Production
+        if: steps.get-prod-url.outputs.production_url != ''
+        run: |
+          echo "🏥 Final health check on production..."
+          
+          API_URL="${{ steps.get-prod-url.outputs.production_url }}"
+          
+          # Comprehensive health check
+          curl -f "$API_URL/health"
+          curl -f "$API_URL/model/info"
+          
+          echo "✅ Production deployment successful!"
+
+  notify-deployment:
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Notify Success
+        if: needs.deploy-production.result == 'success' || (needs.deploy-staging.result == 'success' && github.event.inputs.environment == 'staging')
+        run: |
+          echo "🎉 Deployment successful!"
+          echo "Environment: ${{ github.event.inputs.environment || 'staging' }}"
+
+      - name: Notify Failure
+        if: needs.deploy-staging.result == 'failure' || needs.deploy-production.result == 'failure'
+        run: |
+          echo "❌ Deployment failed!"
+          echo "Check logs for details"
+
+  cleanup:
+    needs: [deploy-staging, deploy-production]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Cleanup Old Revisions
+        if: env.GCP_SA_KEY != ''
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          echo "🧹 Cleaning up old Cloud Run revisions..."
+          
+          # Keep only the latest 5 revisions
+          # gcloud run revisions list --service=${{ env.SERVICE_NAME }} --region=${{ env.REGION }} \
+          #   --sort-by="~metadata.creationTimestamp" --limit=999 --format="value(metadata.name)" | \
+          #   tail -n +6 | xargs -I {} gcloud run revisions delete {} --region=${{ env.REGION }} --quiet || true

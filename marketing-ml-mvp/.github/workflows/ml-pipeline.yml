@@ -1,0 +1,263 @@
+name: ML Training Pipeline
+
+on:
+  push:
+    branches: [ main, develop ]
+    paths:
+      - 'pipeline/**'
+      - 'data/**'
+      - 'requirements.txt'
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      retrain_model:
+        description: 'Force model retraining'
+        required: false
+        default: 'false'
+        type: boolean
+  schedule:
+    # Ejecutar cada domingo a las 2:00 AM
+    - cron: '0 2 * * 0'
+
+env:
+  PYTHON_VERSION: '3.10'
+  ARTIFACTS_DIR: 'artifacts'
+
+jobs:
+  validate-data:
+    runs-on: ubuntu-latest
+    outputs:
+      data-changed: ${{ steps.check-data.outputs.changed }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 2
+
+      - name: Check if data changed
+        id: check-data
+        run: |
+          if git diff --name-only HEAD~1 HEAD | grep -E "(data/|pipeline/)" || [ "${{ github.event.inputs.retrain_model }}" == "true" ]; then
+            echo "changed=true" >> $GITHUB_OUTPUT
+          else
+            echo "changed=false" >> $GITHUB_OUTPUT
+          fi
+
+  train-model:
+    needs: validate-data
+    if: needs.validate-data.outputs.data-changed == 'true' || github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Create data directory
+        run: mkdir -p data
+
+      - name: Download sample data (if not exists)
+        run: |
+          if [ ! -f "data/marketing_campaign_data.csv" ]; then
+            echo "⚠️ No data file found. Creating placeholder."
+            echo "Note: In production, download from secure storage (GCS, S3, etc.)"
+            # En producción, aquí descargarías los datos desde storage seguro
+            # gsutil cp gs://your-bucket/data/marketing_campaign_data.csv data/
+          fi
+
+      - name: Authenticate with GCP (if using GCP)
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/auth@v1
+        with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Setup Google Cloud SDK (if using GCP)
+        if: env.GCP_SA_KEY != ''
+        uses: google-github-actions/setup-gcloud@v1
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+
+      - name: Run ML Pipeline
+        id: train-pipeline
+        run: |
+          echo "🚀 Starting ML training pipeline..."
+          
+          # Verificar si existe archivo de datos
+          if [ -f "data/marketing_campaign_data.csv" ]; then
+            python pipeline/run_pipeline.py \
+              --data-path data/marketing_campaign_data.csv \
+              --artifacts-dir ${{ env.ARTIFACTS_DIR }} \
+              --test-size 0.2 \
+              --val-split 0.2
+            
+            # Extraer métricas del resultado
+            METRICS=$(python -c "
+            import json
+            with open('${{ env.ARTIFACTS_DIR }}/pipeline_summary.json') as f:
+                data = json.load(f)
+                print(f\"ROC_AUC={data['model_performance']['test_metrics']['roc_auc']:.4f}\")
+                print(f\"F1_SCORE={data['model_performance']['test_metrics']['f1_optimal']:.4f}\")
+                print(f\"TEMPERATURE={data['calibration']['temperature']:.4f}\")
+            ")
+            echo "$METRICS" >> $GITHUB_OUTPUT
+            echo "pipeline_success=true" >> $GITHUB_OUTPUT
+          else
+            echo "❌ No data file found"
+            echo "pipeline_success=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Validate Model Quality
+        if: steps.train-pipeline.outputs.pipeline_success == 'true'
+        run: |
+          python -c "
+          import json
+          import sys
+          
+          # Cargar métricas
+          with open('${{ env.ARTIFACTS_DIR }}/pipeline_summary.json') as f:
+              summary = json.load(f)
+          
+          # Thresholds de calidad
+          min_roc_auc = 0.75
+          min_f1_score = 0.60
+          
+          roc_auc = summary['model_performance']['test_metrics']['roc_auc']
+          f1_score = summary['model_performance']['test_metrics']['f1_optimal']
+          
+          print(f'Model Quality Check:')
+          print(f'ROC-AUC: {roc_auc:.4f} (min: {min_roc_auc})')
+          print(f'F1-Score: {f1_score:.4f} (min: {min_f1_score})')
+          
+          if roc_auc < min_roc_auc or f1_score < min_f1_score:
+              print('❌ Model quality below thresholds')
+              sys.exit(1)
+          else:
+              print('✅ Model quality acceptable')
+          "
+
+      - name: Upload Artifacts
+        if: steps.train-pipeline.outputs.pipeline_success == 'true'
+        uses: actions/upload-artifact@v3
+        with:
+          name: ml-artifacts
+          path: |
+            ${{ env.ARTIFACTS_DIR }}/
+            !${{ env.ARTIFACTS_DIR }}/**/*.log
+          retention-days: 30
+
+      - name: Save to GCS (if using GCP)
+        if: steps.train-pipeline.outputs.pipeline_success == 'true' && env.GCP_SA_KEY != ''
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        run: |
+          # Subir artifacts a Google Cloud Storage
+          gsutil -m cp -r ${{ env.ARTIFACTS_DIR }}/* gs://${{ secrets.GCS_BUCKET }}/models/$(date +%Y%m%d_%H%M%S)/
+
+      - name: Create Model Registry Entry
+        if: steps.train-pipeline.outputs.pipeline_success == 'true'
+        run: |
+          # Crear entrada en registro de modelos
+          echo "📋 Creating model registry entry..."
+          
+          cat > model_info.json << EOF
+          {
+            "model_id": "marketing-campaign-$(date +%Y%m%d_%H%M%S)",
+            "version": "1.0.0",
+            "commit_sha": "${{ github.sha }}",
+            "branch": "${{ github.ref_name }}",
+            "metrics": {
+              "roc_auc": ${{ steps.train-pipeline.outputs.ROC_AUC }},
+              "f1_score": ${{ steps.train-pipeline.outputs.F1_SCORE }},
+              "temperature": ${{ steps.train-pipeline.outputs.TEMPERATURE }}
+            },
+            "artifacts_path": "${{ env.ARTIFACTS_DIR }}",
+            "training_date": "$(date -u +%Y-%m-%dT%H:%M:%SZ)",
+            "methodology": "third_tuning_winner"
+          }
+          EOF
+          
+          echo "Model registry entry created"
+          cat model_info.json
+
+      - name: Comment PR with Results
+        if: github.event_name == 'pull_request' && steps.train-pipeline.outputs.pipeline_success == 'true'
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const fs = require('fs');
+            const summary = JSON.parse(fs.readFileSync('${{ env.ARTIFACTS_DIR }}/pipeline_summary.json', 'utf8'));
+            
+            const comment = `## 🤖 ML Pipeline Results
+            
+            ### Model Performance
+            - **ROC-AUC**: ${summary.model_performance.test_metrics.roc_auc.toFixed(4)}
+            - **F1-Score (optimal)**: ${summary.model_performance.test_metrics.f1_optimal.toFixed(4)}
+            - **Optimal Threshold**: ${summary.model_performance.optimal_threshold.toFixed(4)}
+            
+            ### Calibration
+            - **Temperature**: ${summary.calibration.temperature.toFixed(4)}
+            - **Brier Improvement**: ${summary.calibration.brier_improvement.toFixed(4)}
+            
+            ### Top Features
+            ${summary.interpretability.top_5_features.slice(0, 5).map(f => `- ${f}`).join('\n')}
+            
+            ### Pipeline Duration
+            ${summary.pipeline_info.duration_formatted}
+            
+            📊 Full artifacts available in pipeline run.
+            `;
+            
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: comment
+            });
+
+      - name: Trigger Deployment
+        if: steps.train-pipeline.outputs.pipeline_success == 'true' && github.ref == 'refs/heads/main'
+        run: |
+          echo "🚀 Triggering deployment workflow..."
+          # Trigger deployment job
+          curl -X POST \
+            -H "Accept: application/vnd.github.v3+json" \
+            -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+            https://api.github.com/repos/${{ github.repository }}/actions/workflows/deploy-api.yml/dispatches \
+            -d '{"ref":"main","inputs":{"model_version":"latest"}}'
+
+  notify-results:
+    needs: [validate-data, train-model]
+    if: always()
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Notify Success
+        if: needs.train-model.result == 'success'
+        run: |
+          echo "✅ ML Pipeline completed successfully"
+          echo "Model trained and validated ✅"
+
+      - name: Notify Failure
+        if: needs.train-model.result == 'failure'
+        run: |
+          echo "❌ ML Pipeline failed"
+          echo "Check logs for details"
+          # Aquí podrías enviar notificación a Slack/Teams/email
+
+      - name: Notify Skipped
+        if: needs.validate-data.outputs.data-changed == 'false' && github.event.inputs.retrain_model != 'true'
+        run: |
+          echo "⏭️  Pipeline skipped - no relevant changes detected"

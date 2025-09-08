@@ -1,0 +1,53 @@
+# Python cache
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebooks (we don't need them in the container)
+*.ipynb
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Git
+.git/
+.gitignore
+
+# Documentation (optional)
+*.md
+docs/
+
+# Logs
+*.log
+logs/
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Exclude large unnecessary files but KEEP our test files and data
+!debug_test.py
+!validate_pipeline.py
+!quick_start.py
+!data/marketing_campaign.csv
