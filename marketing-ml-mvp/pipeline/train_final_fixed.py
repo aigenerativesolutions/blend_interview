@@ -49,12 +49,21 @@ class FinalModelTrainer:
         
         # Entrenar
         start_time = datetime.now()
-        self.model.fit(
-            X_train, y_train,
-            eval_set=[(X_test, y_test)],
-            early_stopping_rounds=50,
-            verbose=False
-        )
+        try:
+            self.model.fit(
+                X_train, y_train,
+                eval_set=[(X_test, y_test)],
+                early_stopping_rounds=50,
+                verbose=False
+            )
+        except TypeError:
+            # Versión nueva de XGBoost
+            self.model.set_params(early_stopping_rounds=50)
+            self.model.fit(
+                X_train, y_train,
+                eval_set=[(X_test, y_test)],
+                verbose=False
+            )
         end_time = datetime.now()
         
         training_duration = end_time - start_time
