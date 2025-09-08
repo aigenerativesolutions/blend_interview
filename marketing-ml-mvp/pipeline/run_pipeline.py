@@ -21,7 +21,7 @@ from pipeline.feature_engineering import MarketingFeaturePipeline, prepare_data_
 from pipeline.third_tuning import run_third_tuning
 from pipeline.train_final_fixed import train_final_model_pipeline
 from pipeline.temperature_calibration import calibrate_model_probabilities
-from pipeline.shap_analysis_pipeline import run_complete_shap_analysis
+from pipeline.shap_analysis_pipeline_fixed import run_complete_shap_analysis
 
 # Configurar logging
 logging.basicConfig(
