@@ -139,10 +139,15 @@ class FinalModelTrainer:
         
         artifacts_dir.mkdir(parents=True, exist_ok=True)
         
-        # Guardar modelo
-        model_file = artifacts_dir / "final_model.pkl"
-        joblib.dump(self.model, model_file)
-        logger.info(f"💾 Modelo final guardado en {model_file}")
+        # Guardar modelo base XGBoost (formato nativo JSON - mejor práctica)
+        model_file = artifacts_dir / "xgb_base_model.json"
+        self.model.save_model(model_file)
+        logger.info(f"💾 Modelo base XGBoost guardado en {model_file}")
+        
+        # También mantener compatibilidad con pickle para casos específicos
+        model_file_pkl = artifacts_dir / "final_model.pkl"
+        joblib.dump(self.model, model_file_pkl)
+        logger.info(f"💾 Modelo también guardado como pickle en {model_file_pkl}")
         
         # Feature importance
         feature_importance = dict(zip(feature_names, self.model.feature_importances_))

@@ -118,7 +118,7 @@ class MLOpsPipelineOrchestrator:
         logger.info(f"Procesando datos desde: {self.data_path}")
         
         # Preparar datos
-        data = prepare_data_for_training(self.data_path, test_size=test_size, sample_fraction=1.0)
+        data = prepare_data_for_training(self.data_path, test_size=test_size, sample_fraction=0.03)
         
         logger.info(f"Features: {len(data['feature_names'])}")
         logger.info(f"Train: {data['X_train'].shape}, Test: {data['X_test'].shape}")
