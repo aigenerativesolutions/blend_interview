@@ -1,10 +1,10 @@
 # Marketing Campaign Response Prediction API
 
-## 🎯 Overview
+##  Overview
 
 This project provides a production-ready machine learning API for predicting customer responses to marketing campaigns. The model uses XGBoost with advanced features including probability calibration and SHAP explanations.
 
-## 🏗️ Architecture
+##  Architecture
 
 ```
 marketing-ml-mvp/
@@ -21,7 +21,7 @@ marketing-ml-mvp/
 └── deploy.sh             # GCP deployment script
 ```
 
-## 🚀 Quick Start
+##  Quick Start
 
 ### 1. Local Development
 
@@ -59,7 +59,7 @@ export PROJECT_ID="your-gcp-project-id"
 ./deploy.sh
 ```
 
-## 📊 Model Features
+##  Model Features
 
 ### Core ML Pipeline
 - **XGBoost Classifier** with 3-stage hyperparameter tuning
@@ -159,12 +159,12 @@ GET /model/sample-input
 - **Logging** and metrics for observability
 
 ### Deployment Options
-1. **Cloud Run**: Serverless, auto-scaling (recommended)
+1. **Cloud Run**: Serverless, auto-scaling 
 2. **App Engine**: Managed platform with automatic scaling
 3. **Compute Engine**: Full control over infrastructure
 4. **Local Docker**: Development and testing
 
-## 📋 Requirements
+##  Requirements
 
 ### Data Requirements
 Your training data CSV should include these columns:
@@ -180,7 +180,7 @@ Your training data CSV should include these columns:
 - **Memory**: 2GB+ recommended
 - **CPU**: 2+ cores for optimal performance
 
-## 🔧 Configuration
+##  Configuration
 
 ### Environment Variables
 ```bash
@@ -208,7 +208,7 @@ curl -X POST http://localhost:8080/predict \
   -d @sample_request.json
 ```
 
-## 📈 Monitoring and Logging
+##  Monitoring and Logging
 
 ### Health Checks
 - **Liveness**: `/health` endpoint
@@ -220,28 +220,28 @@ curl -X POST http://localhost:8080/predict \
 - Model prediction metrics
 - Error tracking and alerting
 
-## 🔒 Security
+##  Security
 
 - Input validation with Pydantic
 - Rate limiting (configurable)
 - CORS policy configuration
 - No sensitive data logging
 
-## 🤝 Contributing
+##  Contributing
 
 1. Follow the existing code structure
 2. Add tests for new features
 3. Update documentation
 4. Use type hints consistently
 
-## 📞 Support
+##  Support
 
 For questions about this implementation:
 1. Check the API documentation at `/docs`
 2. Review the model training pipeline in `train_model.py`
 3. Examine the code structure in `src/`
 
-## 🏆 Interview Notes
+##  Interview Notes
 
 This project demonstrates:
 - **Production ML deployment** patterns
