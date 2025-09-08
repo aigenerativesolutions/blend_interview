@@ -29,8 +29,9 @@ def test_optuna_optimizer():
             'feature1': np.random.randn(100),
             'feature2': np.random.randn(100),
             'feature3': np.random.randn(100),
-            'Marital_Status': np.random.choice(['Single', 'Married'], 100).astype('category')
+            'Marital_Status': np.random.choice(['Single', 'Married'], 100)
         })
+        X_train['Marital_Status'] = X_train['Marital_Status'].astype('category')
         y_train = pd.Series(np.random.binomial(1, 0.3, 100))
         
         # Test optimizer creation
