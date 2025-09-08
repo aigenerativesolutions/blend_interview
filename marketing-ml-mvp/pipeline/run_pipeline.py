@@ -153,10 +153,10 @@ class MLOpsPipelineOrchestrator:
         logger.info(f"✅ Train: {X_train_split.shape}, Val: {X_val.shape}")
         
         return {
-            'X_train': X_train_split,
-            'X_val': X_val,
-            'y_train': y_train_split,
-            'y_val': y_val,
+            'X_train': pd.DataFrame(X_train_split, columns=data['feature_names']),
+            'X_val': pd.DataFrame(X_val, columns=data['feature_names']),
+            'y_train': pd.Series(y_train_split),
+            'y_val': pd.Series(y_val),
             'feature_names': data['feature_names']
         }
     

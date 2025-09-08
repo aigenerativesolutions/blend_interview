@@ -78,12 +78,21 @@ class OptunaXGBoostOptimizer:
             y_tr, y_val = y_train.iloc[train_idx], y_train.iloc[val_idx]
             
             # Entrenar con early stopping
-            model.fit(
-                X_tr, y_tr,
-                eval_set=[(X_val, y_val)],
-                early_stopping_rounds=100,
-                verbose=False
-            )
+            try:
+                model.fit(
+                    X_tr, y_tr,
+                    eval_set=[(X_val, y_val)],
+                    early_stopping_rounds=100,
+                    verbose=False
+                )
+            except TypeError:
+                # Versión nueva de XGBoost
+                model.set_params(early_stopping_rounds=100)
+                model.fit(
+                    X_tr, y_tr,
+                    eval_set=[(X_val, y_val)],
+                    verbose=False
+                )
             
             # Predicciones y F1-score
             y_val_pred = model.predict(X_val)
@@ -100,7 +109,8 @@ class OptunaXGBoostOptimizer:
         logger.info(f"🔄 Optimizando con 100 trials usando TPESampler")
         
         # Calcular scale_pos_weight
-        self.scale_pos_weight = self.calculate_scale_pos_weight(y_train.values)
+        y_train_values = y_train.values if hasattr(y_train, 'values') else y_train
+        self.scale_pos_weight = self.calculate_scale_pos_weight(y_train_values)
         
         # Configurar sampler exacto del notebook
         sampler = TPESampler(seed=42, multivariate=True, n_startup_trials=20)
