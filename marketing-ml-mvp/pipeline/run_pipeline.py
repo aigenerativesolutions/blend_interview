@@ -17,7 +17,7 @@ import argparse
 sys.path.append(str(Path(__file__).parent.parent))
 
 # Importar módulos del pipeline
-from pipeline.feature_engineering import MarketingFeaturePipeline, prepare_data_for_training
+from pipeline.feature_engineering_exact import prepare_data_for_training_exact
 from pipeline.third_tuning import run_third_tuning
 from pipeline.train_final_fixed import train_final_model_pipeline
 from pipeline.temperature_calibration import calibrate_model_probabilities
@@ -118,11 +118,7 @@ class MLOpsPipelineOrchestrator:
         logger.info(f"Procesando datos desde: {self.data_path}")
         
         # Preparar datos
-        data = prepare_data_for_training(self.data_path, test_size=test_size)
-        
-        # Guardar pipeline
-        pipeline_path = self.artifacts_dir / "feature_pipeline.pkl"
-        data['pipeline'].save(pipeline_path)
+        data = prepare_data_for_training_exact(self.data_path, test_size=test_size)
         
         logger.info(f"✅ Features: {len(data['feature_names'])}")
         logger.info(f"✅ Train: {data['X_train'].shape}, Test: {data['X_test'].shape}")
@@ -153,10 +149,10 @@ class MLOpsPipelineOrchestrator:
         logger.info(f"✅ Train: {X_train_split.shape}, Val: {X_val.shape}")
         
         return {
-            'X_train': pd.DataFrame(X_train_split, columns=data['feature_names']),
-            'X_val': pd.DataFrame(X_val, columns=data['feature_names']),
-            'y_train': pd.Series(y_train_split),
-            'y_val': pd.Series(y_val),
+            'X_train': X_train_split,
+            'X_val': X_val,
+            'y_train': y_train_split,
+            'y_val': y_val,
             'feature_names': data['feature_names']
         }
     
