@@ -17,7 +17,7 @@ import argparse
 sys.path.append(str(Path(__file__).parent.parent))
 
 # Importar módulos del pipeline
-from pipeline.feature_engineering_exact import prepare_data_for_training_exact
+from src.data.preprocessor_unified import prepare_data_for_training
 from pipeline.third_tuning import run_third_tuning
 from pipeline.train_final_fixed import train_final_model_pipeline
 from pipeline.temperature_calibration import calibrate_model_probabilities
@@ -118,7 +118,7 @@ class MLOpsPipelineOrchestrator:
         logger.info(f"Procesando datos desde: {self.data_path}")
         
         # Preparar datos
-        data = prepare_data_for_training_exact(self.data_path, test_size=test_size)
+        data = prepare_data_for_training(self.data_path, test_size=test_size, sample_fraction=0.05)
         
         logger.info(f"✅ Features: {len(data['feature_names'])}")
         logger.info(f"✅ Train: {data['X_train'].shape}, Test: {data['X_test'].shape}")

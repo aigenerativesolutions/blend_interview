@@ -1,16 +1,13 @@
 """
 Data preprocessing module for marketing campaign data
+Unified implementation following exact notebook methodology
 """
 import pandas as pd
 import numpy as np
 from pathlib import Path
-from typing import Tuple, Optional
+from typing import Tuple, Optional, Dict, Any
+from sklearn.model_selection import train_test_split
 import logging
-
-from ..config.settings import (
-    DATA_PATH, MARKETING_DATA_FILE, CURRENT_YEAR, 
-    SPENDING_COLUMNS, COLUMNS_TO_DROP
-)
 
 logger = logging.getLogger(__name__)
 

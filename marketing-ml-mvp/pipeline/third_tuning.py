@@ -106,7 +106,7 @@ class OptunaXGBoostOptimizer:
         Ejecutar optimización con Optuna exactamente como en el notebook
         """
         logger.info("🎯 Iniciando 3er Tuning con Optuna - Metodología Ganadora")
-        logger.info(f"🔄 Optimizando con 100 trials usando TPESampler")
+        logger.info(f"🔄 Optimizando con 10 trials usando TPESampler")
         
         # Calcular scale_pos_weight
         y_train_values = y_train.values if hasattr(y_train, 'values') else y_train
@@ -124,7 +124,7 @@ class OptunaXGBoostOptimizer:
         # Optimizar (reproduce exacto del notebook)
         self.study.optimize(
             lambda trial: self.objective(trial, X_train, y_train),
-            n_trials=100,
+            n_trials=10,
             callbacks=[self._log_callback]
         )
         
