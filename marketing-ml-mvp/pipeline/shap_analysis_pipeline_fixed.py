@@ -12,6 +12,7 @@ from pathlib import Path
 import logging
 from typing import Dict, Any, List, Optional
 from datetime import datetime
+from .json_utils import safe_json_dump
 
 logger = logging.getLogger(__name__)
 
@@ -118,7 +119,9 @@ class SHAPAnalysisPipeline:
                 pos_inputs = feature_input_values[pos_indices]
                 
                 # Ordenar por valor SHAP descendente
-                sorted_idx = np.argsort(pos_shap)[::-1][:top_n]
+                sorted_pos_idx = np.argsort(pos_shap)[::-1]
+                top_pos_count = min(len(sorted_pos_idx), top_n)
+                sorted_idx = sorted_pos_idx[:top_pos_count]
                 
                 top_positive = [
                     {
@@ -139,7 +142,9 @@ class SHAPAnalysisPipeline:
                 neg_inputs = feature_input_values[neg_indices]
                 
                 # Ordenar por valor SHAP ascendente (más negativo primero)
-                sorted_idx = np.argsort(neg_shap)[:top_n]
+                sorted_neg_idx = np.argsort(neg_shap)
+                top_neg_count = min(len(sorted_neg_idx), top_n)
+                sorted_idx = sorted_neg_idx[:top_neg_count]
                 
                 top_negative = [
                     {
@@ -257,7 +262,7 @@ class SHAPAnalysisPipeline:
         # Guardar feature importance
         importance_path = shap_dir / "global_feature_importance.json"
         with open(importance_path, 'w') as f:
-            json.dump(feature_importance, f, indent=2)
+            safe_json_dump(feature_importance, f, indent=2)
         
         # NUEVO: Extraer y guardar top 20 valores positivos/negativos por feature
         logger.info("📊 Extrayendo top valores SHAP por feature...")
@@ -265,7 +270,7 @@ class SHAPAnalysisPipeline:
             top_values_analysis = self.extract_top_shap_values(self._current_X, top_n=20)
             top_values_path = shap_dir / "top_shap_values_by_feature.json"
             with open(top_values_path, 'w') as f:
-                json.dump(top_values_analysis, f, indent=2)
+                safe_json_dump(top_values_analysis, f, indent=2)
             logger.info(f"💾 Top valores SHAP guardados en {top_values_path}")
             
             # NUEVO: Analizar interdependencias entre top 7 features
@@ -273,7 +278,7 @@ class SHAPAnalysisPipeline:
             interactions_analysis = self.analyze_feature_interactions(self._current_X, top_features=7)
             interactions_path = shap_dir / "feature_interactions_top7.json"
             with open(interactions_path, 'w') as f:
-                json.dump(interactions_analysis, f, indent=2)
+                safe_json_dump(interactions_analysis, f, indent=2)
             logger.info(f"💾 Análisis de interdependencias guardado en {interactions_path}")
         
         # Guardar metadatos
@@ -290,7 +295,7 @@ class SHAPAnalysisPipeline:
         
         metadata_path = shap_dir / "shap_metadata.json"
         with open(metadata_path, 'w') as f:
-            json.dump(metadata, f, indent=2)
+            safe_json_dump(metadata, f, indent=2)
         
         logger.info(f"💾 SHAP analysis completo guardado en {shap_dir}")
 

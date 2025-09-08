@@ -1,0 +1,1444 @@
+{
+  "Months_As_Customer": {
+    "Marital_Status_Widow": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.30417031021784957,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.988846595391836,
+          "mean_input_j": 0.47037562957541823
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.9078628826058618,
+          "mean_input_j": -0.8903739674892704
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.6785612241089631,
+          "mean_input_j": -0.7838949368445765
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.7252565281271057,
+          "mean_input_j": 0.4386442406940416
+        }
+      }
+    },
+    "Education_Basic": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.12540188496339116,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.7900479653010274,
+          "mean_input_j": 0.5270526362015746
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 1.199922293655598,
+          "mean_input_j": -0.6372768435057125
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.48544203283274784,
+          "mean_input_j": -0.3914998120949685
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.9671836818226787,
+          "mean_input_j": 0.36042038850434666
+        }
+      }
+    },
+    "NumStorePurchases": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.5837827112681807,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 1.2100085229324185,
+          "mean_input_j": 0.735037695459393
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.3549580637544052,
+          "mean_input_j": -0.6920040461901102
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.8910201193582197,
+          "mean_input_j": -1.0186167280458718
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.19410929000396462,
+          "mean_input_j": 0.11619591317989314
+        }
+      }
+    },
+    "Total_Spent": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.32010377970119586,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.03982557728886604,
+          "mean_input_i": 0.9544023959903077,
+          "mean_input_j": 0.5565654407296639
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": 0.9741878885499949,
+          "mean_input_j": -0.9699547520926074
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": -0.17443309751696776,
+          "mean_input_j": -0.8738724717754306
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.0541573166847229,
+          "mean_input_i": -1.0800049710620312,
+          "mean_input_j": 0.49011769000808547
+        }
+      }
+    },
+    "AcceptedCmpOverall": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.4052784514138895,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.999105681237434,
+          "mean_input_j": 0.9697897081904869
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.8822151679918666,
+          "mean_input_j": -0.5695480610356576
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -0.8568641652543724,
+          "mean_input_j": -0.3018253799268852
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -0.2794991752635831,
+          "mean_input_j": 0.5583317839106625
+        }
+      }
+    },
+    "MntFishProducts": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.3120155305826896,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.8165211924184264,
+          "mean_input_j": 0.7676101331482433
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 1.077598791228906,
+          "mean_input_j": -0.12118056997496428
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.07228343293931959,
+          "mean_input_j": -0.5305858946263031
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.39194178581237793,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -1.1566172194952673,
+          "mean_input_j": 0.7498014566256362
+        }
+      }
+    }
+  },
+  "Marital_Status_Widow": {
+    "Months_As_Customer": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.30417031021784957,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.47037562957541823,
+          "mean_input_j": 0.988846595391836
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.4386442406940416,
+          "mean_input_j": -0.7252565281271057
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.7838949368445765,
+          "mean_input_j": -0.6785612241089631
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.8903739674892704,
+          "mean_input_j": 0.9078628826058618
+        }
+      }
+    },
+    "Education_Basic": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.09136083543275646,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.436880566855196,
+          "mean_input_j": 0.4456021807964794
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.49388145394813004,
+          "mean_input_j": -0.451422322729554
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.6038141972704962,
+          "mean_input_j": -0.5308907026770873
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -1.0949886100398127,
+          "mean_input_j": 0.46902099571114025
+        }
+      }
+    },
+    "NumStorePurchases": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.3260428073299369,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.4337124327633612,
+          "mean_input_j": 0.6528814838853668
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.5303022327241841,
+          "mean_input_j": -0.9695019023777172
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.7741142685174538,
+          "mean_input_j": -0.907617585570829
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.9148256383070772,
+          "mean_input_j": 0.3215864421149583
+        }
+      }
+    },
+    "Total_Spent": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.17231352791149937,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": 0.13096298277378082,
+          "mean_input_i": 0.3636562195956514,
+          "mean_input_j": 1.0740120942322249
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": 0.534549492619555,
+          "mean_input_j": -0.871578178483602
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": -0.8445559598764617,
+          "mean_input_j": -1.0050412365874377
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.12251036614179611,
+          "mean_input_i": -0.7916386848930094,
+          "mean_input_j": 0.10203269988116466
+        }
+      }
+    },
+    "AcceptedCmpOverall": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.4098306332847284,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.5650293428353972,
+          "mean_input_j": 1.1345102438386077
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": 0.32301641930786185,
+          "mean_input_j": -0.29729593102469265
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -0.9510438447749924,
+          "mean_input_j": -0.43908380715791573
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": -0.6320157467004844,
+          "mean_input_j": 0.4758570444731099
+        }
+      }
+    },
+    "MntFishProducts": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.14608041583128084,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.5767881855477699,
+          "mean_input_j": 0.6578953772761036
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.3073379623580315,
+          "mean_input_j": -0.17516755275823015
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.7332944445707267,
+          "mean_input_j": -0.38774432637601897
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": 0.3159363269805908,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.922348280306172,
+          "mean_input_j": 0.8901515722809535
+        }
+      }
+    }
+  },
+  "Education_Basic": {
+    "Months_As_Customer": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.12540188496339116,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.5270526362015746,
+          "mean_input_j": 0.7900479653010274
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.36042038850434666,
+          "mean_input_j": -0.9671836818226787
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.3914998120949685,
+          "mean_input_j": -0.48544203283274784
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.6372768435057125,
+          "mean_input_j": 1.199922293655598
+        }
+      }
+    },
+    "Marital_Status_Widow": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.09136083543275647,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.4456021807964794,
+          "mean_input_j": 0.436880566855196
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.46902099571114025,
+          "mean_input_j": -1.0949886100398127
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.5308907026770873,
+          "mean_input_j": -0.6038141972704962
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.451422322729554,
+          "mean_input_j": 0.49388145394813004
+        }
+      }
+    },
+    "NumStorePurchases": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.0070802644251673486,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.20674248039722443,
+          "mean_input_i": 0.5872541117697742,
+          "mean_input_j": 0.8850901474758782
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.3569273437525039,
+          "mean_input_j": -1.1340296371596885
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.20674248039722443,
+          "mean_input_i": -0.7120517371633813,
+          "mean_input_j": -0.6469910613236087
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.3354186418517168,
+          "mean_input_j": 0.31307746530727903
+        }
+      }
+    },
+    "Total_Spent": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.31719217874478806,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.009386986494064331,
+          "mean_input_i": 0.4136778894786052,
+          "mean_input_j": 0.5821543520380997
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": 0.5605411314631562,
+          "mean_input_j": -0.9917748496960066
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": -0.49551821186887646,
+          "mean_input_j": -0.9035773448609415
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.02510879933834076,
+          "mean_input_i": -0.5001193597763145,
+          "mean_input_j": 0.35969766101541734
+        }
+      }
+    },
+    "AcceptedCmpOverall": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.2566805427660166,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": 0.40184322846714265,
+          "mean_input_j": 1.1281530528027899
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.49598550622947757,
+          "mean_input_j": -0.2084444329883462
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": -0.42163185093019506,
+          "mean_input_j": -0.6048150965841187
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -0.5532335565266066,
+          "mean_input_j": 0.6452882375913477
+        }
+      }
+    },
+    "MntFishProducts": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.08113894119999746,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.44824380220213084,
+          "mean_input_j": 0.6675012061422093
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.4741263496543421,
+          "mean_input_j": -0.33576760131320627
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.305434723729493,
+          "mean_input_j": -0.2809889522304708
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.312570184469223,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.9753280801247732,
+          "mean_input_j": 0.9822650976181141
+        }
+      }
+    }
+  },
+  "NumStorePurchases": {
+    "Months_As_Customer": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.5837827112681807,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.735037695459393,
+          "mean_input_j": 1.2100085229324185
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.11619591317989314,
+          "mean_input_j": -0.19410929000396462
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -1.0186167280458718,
+          "mean_input_j": -0.8910201193582197
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.6920040461901102,
+          "mean_input_j": 0.3549580637544052
+        }
+      }
+    },
+    "Marital_Status_Widow": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.3260428073299369,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.6528814838853668,
+          "mean_input_j": 0.4337124327633612
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.3215864421149583,
+          "mean_input_j": -0.9148256383070772
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.907617585570829,
+          "mean_input_j": -0.7741142685174538
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.9695019023777172,
+          "mean_input_j": 0.5303022327241841
+        }
+      }
+    },
+    "Education_Basic": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.007080264425167349,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.20674248039722443,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.8850901474758782,
+          "mean_input_j": 0.5872541117697742
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.31307746530727903,
+          "mean_input_j": -0.3354186418517168
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.20674248039722443,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.6469910613236087,
+          "mean_input_j": -0.7120517371633813
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -1.1340296371596885,
+          "mean_input_j": 0.3569273437525039
+        }
+      }
+    },
+    "Total_Spent": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.2541581228356687,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.0722927674651146,
+          "mean_input_i": 0.6366275734926943,
+          "mean_input_j": 0.6318389863477527
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": -0.20674248039722443,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": 0.45369000322865793,
+          "mean_input_j": -0.9010198071993903
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": -1.057891026808166,
+          "mean_input_j": -0.9495942505246376
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.20674248039722443,
+          "mean_shap_j": -0.12877453863620758,
+          "mean_input_i": -0.7485092084589718,
+          "mean_input_j": 0.3676037122767742
+        }
+      }
+    },
+    "AcceptedCmpOverall": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.08497990757071044,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.20674248039722443,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": 0.5223384720131227,
+          "mean_input_j": 1.250318790537326
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.5851412219043458,
+          "mean_input_j": -0.45063695860034214
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.20674248039722443,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": -0.8957176044672076,
+          "mean_input_j": -0.2818917291014575
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -0.9474847298019893,
+          "mean_input_j": 0.5536639342904455
+        }
+      }
+    },
+    "MntFishProducts": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.26952706005162375,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 2,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.4524423707591606,
+          "mean_input_j": 0.4978438225811508
+        },
+        "i_high_j_low": {
+          "count": 5,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.600539112427686,
+          "mean_input_j": -0.20130445239519026
+        },
+        "both_low": {
+          "count": 2,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.7376217152002846,
+          "mean_input_j": -0.5349788509014075
+        },
+        "i_low_j_high": {
+          "count": 5,
+          "mean_shap_i": -0.20674249529838562,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -1.0003696604418022,
+          "mean_input_j": 0.8612697161569945
+        }
+      }
+    }
+  },
+  "Total_Spent": {
+    "Months_As_Customer": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.32010377970119586,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": 0.03982557728886604,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.5565654407296639,
+          "mean_input_j": 0.9544023959903077
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.0541573166847229,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.49011769000808547,
+          "mean_input_j": -1.0800049710620312
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.8738724717754306,
+          "mean_input_j": -0.17443309751696776
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.9699547520926074,
+          "mean_input_j": 0.9741878885499949
+        }
+      }
+    },
+    "Marital_Status_Widow": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.17231352791149937,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": 0.13096298277378082,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 1.0740120942322249,
+          "mean_input_j": 0.3636562195956514
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.12251036614179611,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.10203269988116466,
+          "mean_input_j": -0.7916386848930094
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -1.0050412365874377,
+          "mean_input_j": -0.8445559598764617
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.871578178483602,
+          "mean_input_j": 0.534549492619555
+        }
+      }
+    },
+    "Education_Basic": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.317192178744788,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.009386986494064331,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.5821543520380997,
+          "mean_input_j": 0.4136778894786052
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.02510879933834076,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.35969766101541734,
+          "mean_input_j": -0.5001193597763145
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.9035773448609415,
+          "mean_input_j": -0.49551821186887646
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.9917748496960066,
+          "mean_input_j": 0.5605411314631562
+        }
+      }
+    },
+    "NumStorePurchases": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.2541581228356687,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": 0.0722927674651146,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.6318389863477527,
+          "mean_input_j": 0.6366275734926943
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": -0.12877453863620758,
+          "mean_shap_j": -0.20674248039722443,
+          "mean_input_i": 0.3676037122767742,
+          "mean_input_j": -0.7485092084589718
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.9495942505246376,
+          "mean_input_j": -1.057891026808166
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.20674248039722443,
+          "mean_input_i": -0.9010198071993903,
+          "mean_input_j": 0.45369000322865793
+        }
+      }
+    },
+    "AcceptedCmpOverall": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.024526741666439613,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 2,
+          "mean_shap_i": -0.02510879933834076,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.2880217560494756,
+          "mean_input_j": 1.2986872773329587
+        },
+        "i_high_j_low": {
+          "count": 5,
+          "mean_shap_i": -0.009386986494064331,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.6108247140244764,
+          "mean_input_j": -0.38643397618468545
+        },
+        "both_low": {
+          "count": 2,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -1.0104893627037432,
+          "mean_input_j": -0.3580265703911568
+        },
+        "i_low_j_high": {
+          "count": 5,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -0.8960915396578468,
+          "mean_input_j": 0.6736475108215685
+        }
+      }
+    },
+    "MntFishProducts": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.06477446701018337,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": -0.0541573166847229,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.47891831391732065,
+          "mean_input_j": 0.8011485952437636
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": 0.03982557728886604,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.571497942184017,
+          "mean_input_j": -0.32006461384885027
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -1.0178429430594216,
+          "mean_input_j": -0.2790715305580539
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.21991193294525146,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.8100215504863447,
+          "mean_input_j": 0.6991472816574068
+        }
+      }
+    }
+  },
+  "AcceptedCmpOverall": {
+    "Months_As_Customer": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.4052784514138896,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.9697897081904869,
+          "mean_input_j": 0.999105681237434
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.5583317839106625,
+          "mean_input_j": -0.2794991752635831
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.3018253799268852,
+          "mean_input_j": -0.8568641652543724
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.5695480610356576,
+          "mean_input_j": 0.8822151679918666
+        }
+      }
+    },
+    "Marital_Status_Widow": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.40983063328472835,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 1.1345102438386077,
+          "mean_input_j": 0.5650293428353972
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.4758570444731099,
+          "mean_input_j": -0.6320157467004844
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.43908380715791573,
+          "mean_input_j": -0.9510438447749924
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.29729593102469265,
+          "mean_input_j": 0.32301641930786185
+        }
+      }
+    },
+    "Education_Basic": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.25668054276601654,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 1.1281530528027899,
+          "mean_input_j": 0.40184322846714265
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.6452882375913477,
+          "mean_input_j": -0.5532335565266066
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.6048150965841187,
+          "mean_input_j": -0.42163185093019506
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.2084444329883462,
+          "mean_input_j": 0.49598550622947757
+        }
+      }
+    },
+    "NumStorePurchases": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.08497990757071044,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": -0.20674248039722443,
+          "mean_input_i": 1.250318790537326,
+          "mean_input_j": 0.5223384720131227
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.5536639342904455,
+          "mean_input_j": -0.9474847298019893
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": -0.20674248039722443,
+          "mean_input_i": -0.2818917291014575,
+          "mean_input_j": -0.8957176044672076
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.45063695860034214,
+          "mean_input_j": 0.5851412219043458
+        }
+      }
+    },
+    "Total_Spent": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.024526741666439617,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 2,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.02510879933834076,
+          "mean_input_i": 1.2986872773329587,
+          "mean_input_j": 0.2880217560494756
+        },
+        "i_high_j_low": {
+          "count": 5,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": 0.6736475108215685,
+          "mean_input_j": -0.8960915396578468
+        },
+        "both_low": {
+          "count": 2,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": -0.3580265703911568,
+          "mean_input_j": -1.0104893627037432
+        },
+        "i_low_j_high": {
+          "count": 5,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": -0.009386986494064331,
+          "mean_input_i": -0.38643397618468545,
+          "mean_input_j": 0.6108247140244764
+        }
+      }
+    },
+    "MntFishProducts": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.05721575613722577,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 1.0358570947254093,
+          "mean_input_j": 0.7472726474548108
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": 0.6073945766240411,
+          "mean_input_j": -0.29029933540978164
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": -0.19491085410118103,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.45063695860034214,
+          "mean_input_j": -0.30139548938735533
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": -0.19491083920001984,
+          "mean_shap_j": 0.1827077716588974,
+          "mean_input_i": -0.2818917291014575,
+          "mean_input_j": 0.7709818787093439
+        }
+      }
+    }
+  },
+  "MntFishProducts": {
+    "Months_As_Customer": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.31201553058268966,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.7676101331482433,
+          "mean_input_j": 0.8165211924184264
+        },
+        "i_high_j_low": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": 0.7498014566256362,
+          "mean_input_j": -1.1566172194952673
+        },
+        "both_low": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.5305858946263031,
+          "mean_input_j": -0.07228343293931959
+        },
+        "i_low_j_high": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.39194178581237793,
+          "mean_input_i": -0.12118056997496428,
+          "mean_input_j": 1.077598791228906
+        }
+      }
+    },
+    "Marital_Status_Widow": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.1460804158312808,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.6578953772761036,
+          "mean_input_j": 0.5767881855477699
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": 0.8901515722809535,
+          "mean_input_j": -0.922348280306172
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.38774432637601897,
+          "mean_input_j": -0.7332944445707267
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": 0.3159363269805908,
+          "mean_input_i": -0.17516755275823015,
+          "mean_input_j": 0.3073379623580315
+        }
+      }
+    },
+    "Education_Basic": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.08113894119999744,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 5,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.6675012061422093,
+          "mean_input_j": 0.44824380220213084
+        },
+        "i_high_j_low": {
+          "count": 2,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": 0.9822650976181141,
+          "mean_input_j": -0.9753280801247732
+        },
+        "both_low": {
+          "count": 5,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.2809889522304708,
+          "mean_input_j": -0.305434723729493
+        },
+        "i_low_j_high": {
+          "count": 2,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.312570184469223,
+          "mean_input_i": -0.33576760131320627,
+          "mean_input_j": 0.4741263496543421
+        }
+      }
+    },
+    "NumStorePurchases": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.2695270600516238,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 2,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.4978438225811508,
+          "mean_input_j": 0.4524423707591606
+        },
+        "i_high_j_low": {
+          "count": 5,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": 0.8612697161569945,
+          "mean_input_j": -1.0003696604418022
+        },
+        "both_low": {
+          "count": 2,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.5349788509014075,
+          "mean_input_j": -0.7376217152002846
+        },
+        "i_low_j_high": {
+          "count": 5,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.20674249529838562,
+          "mean_input_i": -0.20130445239519026,
+          "mean_input_j": 0.600539112427686
+        }
+      }
+    },
+    "Total_Spent": {
+      "shap_correlation": 0.0,
+      "input_correlation": -0.06477446701018337,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.0541573166847229,
+          "mean_input_i": 0.8011485952437636,
+          "mean_input_j": 0.47891831391732065
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": 0.6991472816574068,
+          "mean_input_j": -0.8100215504863447
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.21991193294525146,
+          "mean_input_i": -0.2790715305580539,
+          "mean_input_j": -1.0178429430594216
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": 0.03982557728886604,
+          "mean_input_i": -0.32006461384885027,
+          "mean_input_j": 0.571497942184017
+        }
+      }
+    },
+    "AcceptedCmpOverall": {
+      "shap_correlation": 0.0,
+      "input_correlation": 0.05721575613722577,
+      "quadrant_analysis": {
+        "both_high": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": 0.7472726474548108,
+          "mean_input_j": 1.0358570947254093
+        },
+        "i_high_j_low": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": 0.7709818787093439,
+          "mean_input_j": -0.2818917291014575
+        },
+        "both_low": {
+          "count": 4,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.19491085410118103,
+          "mean_input_i": -0.30139548938735533,
+          "mean_input_j": -0.45063695860034214
+        },
+        "i_low_j_high": {
+          "count": 3,
+          "mean_shap_i": 0.1827077716588974,
+          "mean_shap_j": -0.19491083920001984,
+          "mean_input_i": -0.29029933540978164,
+          "mean_input_j": 0.6073945766240411
+        }
+      }
+    }
+  }
+}

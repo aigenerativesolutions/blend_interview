@@ -22,6 +22,7 @@ from pipeline.third_tuning import run_third_tuning
 from pipeline.train_final_fixed import train_final_model_pipeline
 from pipeline.temperature_calibration import calibrate_model_probabilities
 from pipeline.shap_analysis_pipeline_fixed import run_complete_shap_analysis
+from pipeline.correlation_analysis import run_correlation_analysis
 
 # Configurar logging
 logging.basicConfig(
@@ -88,11 +89,15 @@ class MLOpsPipelineOrchestrator:
                 final_model_results['model'], data
             )
             
-            # Paso 7: Generar resumen final
-            logger.info("📋 PASO 7: GENERANDO RESUMEN FINAL")
+            # Paso 7: Análisis de Correlaciones
+            logger.info("🔗 PASO 7: ANÁLISIS DE CORRELACIONES")
+            correlation_results = self._run_correlation_analysis(data)
+            
+            # Paso 8: Generar resumen final
+            logger.info("📋 PASO 8: GENERANDO RESUMEN FINAL")
             final_summary = self._generate_final_summary(
                 data, tuning_results, final_model_results, 
-                calibration_results, shap_results
+                calibration_results, shap_results, correlation_results
             )
             
             self.end_time = datetime.now()
@@ -238,11 +243,39 @@ class MLOpsPipelineOrchestrator:
         
         return shap_results
     
+    def _run_correlation_analysis(self, data: Dict[str, Any]) -> Dict[str, Any]:
+        """
+        Ejecutar análisis completo de correlaciones
+        """
+        # Combinar X_train y X_test para análisis completo
+        import pandas as pd
+        X_full = pd.concat([data['X_train'], data['X_test']], ignore_index=True)
+        
+        correlation_results = run_correlation_analysis(X_full, self.artifacts_dir)
+        
+        # Extraer métricas clave para logging
+        summary = correlation_results['summary']
+        strong_pos = len(correlation_results['filtered_correlations']['strong_positive'])
+        strong_neg = len(correlation_results['filtered_correlations']['strong_negative'])
+        
+        logger.info(f"📊 Pares analizados: {summary['total_pairs_analyzed']}")
+        logger.info(f"📈 Correlaciones fuertes positivas: {strong_pos}")
+        logger.info(f"📉 Correlaciones fuertes negativas: {strong_neg}")
+        
+        self.pipeline_results['correlation_analysis'] = {
+            'strong_positive_count': strong_pos,
+            'strong_negative_count': strong_neg,
+            'total_pairs_analyzed': summary['total_pairs_analyzed']
+        }
+        
+        return correlation_results
+    
     def _generate_final_summary(self, data: Dict[str, Any], 
                               tuning_results: Dict[str, Any],
                               final_model_results: Dict[str, Any],
                               calibration_results, 
-                              shap_results: Dict[str, Any]) -> Dict[str, Any]:
+                              shap_results: Dict[str, Any],
+                              correlation_results: Dict[str, Any]) -> Dict[str, Any]:
         """
         Generar resumen final del pipeline
         """
@@ -280,11 +313,32 @@ class MLOpsPipelineOrchestrator:
                 'top_5_features': list(shap_results['feature_importance'].keys())[:5],
                 'feature_importance': shap_results['feature_importance']
             },
+            'correlation_analysis': {
+                'strong_positive_count': correlation_results['summary']['strong_positive_count'],
+                'strong_negative_count': correlation_results['summary']['strong_negative_count'],
+                'total_pairs_analyzed': correlation_results['summary']['total_pairs_analyzed'],
+                'top_positive_correlations': [
+                    {
+                        'variables': f"{corr['variable_1']} ↔ {corr['variable_2']}",
+                        'correlation': corr['correlation']
+                    }
+                    for corr in correlation_results['filtered_correlations']['strong_positive'][:3]
+                ],
+                'top_negative_correlations': [
+                    {
+                        'variables': f"{corr['variable_1']} ↔ {corr['variable_2']}",
+                        'correlation': corr['correlation']
+                    }
+                    for corr in correlation_results['filtered_correlations']['strong_negative'][:3]
+                ]
+            },
             'artifacts': {
                 'feature_pipeline': 'feature_pipeline.pkl',
                 'final_model': 'final_model.pkl',
                 'temperature_calibrator': 'temperature_calibrator.pkl',
                 'shap_explainer': 'shap_values/shap_explainer.pkl',
+                'correlation_matrix': 'correlation_analysis/correlation_matrix.json',
+                'correlation_plots': 'correlation_analysis/',
                 'plots_generated': True
             }
         }
