@@ -16,6 +16,7 @@ from pathlib import Path
 import logging
 from typing import Dict, Any, Tuple
 from datetime import datetime
+from .json_utils import safe_json_dump
 import matplotlib.pyplot as plt
 import seaborn as sns
 
@@ -67,7 +68,7 @@ class FinalModelTrainer:
         end_time = datetime.now()
         
         training_duration = end_time - start_time
-        logger.info(f"✅ Modelo entrenado en {training_duration}")
+        logger.info(f"Modelo entrenado en {training_duration}")
         
         # Calcular métricas
         self._calculate_metrics(X_train, y_train, X_test, y_test, feature_names)
@@ -165,7 +166,7 @@ class FinalModelTrainer:
         # Guardar metadatos
         metadata_file = artifacts_dir / "final_model_metadata.json"
         with open(metadata_file, 'w') as f:
-            json.dump(metadata, f, indent=2)
+            safe_json_dump(metadata, f, indent=2)
         logger.info(f"📊 Metadatos guardados en {metadata_file}")
 
 def train_final_model_pipeline(X_train: np.ndarray, y_train: np.ndarray,
@@ -185,16 +186,16 @@ def train_final_model_pipeline(X_train: np.ndarray, y_train: np.ndarray,
     # Usar parámetros pasados directamente
     if best_params is not None:
         trainer.best_params = best_params
-        logger.info(f"✅ Usando parámetros de Optuna: {len(best_params)} parámetros")
+        logger.info(f"Usando parámetros de Optuna: {len(best_params)} parámetros")
     else:
         raise ValueError("Se requieren best_params de Optuna")
     
     if optimal_threshold is not None:
         trainer.optimal_threshold = optimal_threshold
-        logger.info(f"✅ Usando threshold de Optuna: {optimal_threshold:.4f}")
+        logger.info(f"Usando threshold de Optuna: {optimal_threshold:.4f}")
     else:
         trainer.optimal_threshold = 0.5
-        logger.info("⚠️ Usando threshold por defecto: 0.5")
+        logger.info("Usando threshold por defecto: 0.5")
     
     # Entrenar modelo
     model = trainer.train_final_model(X_train, y_train, X_test, y_test, feature_names)
@@ -202,7 +203,7 @@ def train_final_model_pipeline(X_train: np.ndarray, y_train: np.ndarray,
     # Guardar modelo y metadatos
     trainer.save_final_model(artifacts_dir, feature_names)
     
-    logger.info("✅ Pipeline de entrenamiento final completado")
+    logger.info("Pipeline de entrenamiento final completado")
     
     # Retornar resumen
     return {

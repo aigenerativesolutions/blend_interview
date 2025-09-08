@@ -23,18 +23,18 @@ def validate_data_loading():
     data_path = Path("data/marketing_campaign.csv")
     
     if not data_path.exists():
-        logger.error(f"❌ Data file not found: {data_path}")
+        logger.error(f" Data file not found: {data_path}")
         return False
     
     try:
         # Load with semicolon separator (original dataset format)
         df = pd.read_csv(data_path, sep=';')
-        logger.info(f"✅ Data loaded: {df.shape}")
+        logger.info(f" Data loaded: {df.shape}")
         logger.info(f"📊 Columns: {list(df.columns)}")
         
         # Check target column
         if 'Response' not in df.columns:
-            logger.error("❌ Target column 'Response' not found")
+            logger.error(" Target column 'Response' not found")
             return False
         
         logger.info(f"🎯 Target distribution: {df['Response'].value_counts().to_dict()}")
@@ -45,9 +45,9 @@ def validate_data_loading():
         
         missing_cols = [col for col in expected_cols if col not in df.columns]
         if missing_cols:
-            logger.warning(f"⚠️ Missing expected columns: {missing_cols}")
+            logger.warning(f" Missing expected columns: {missing_cols}")
         else:
-            logger.info("✅ All expected columns present")
+            logger.info(" All expected columns present")
         
         # Clean data (remove columns that should be dropped)
         columns_to_drop = ['ID', 'Z_CostContact', 'Z_Revenue']
@@ -57,7 +57,7 @@ def validate_data_loading():
         return True
         
     except Exception as e:
-        logger.error(f"❌ Error loading data: {str(e)}")
+        logger.error(f" Error loading data: {str(e)}")
         return False
 
 def validate_feature_engineering():
@@ -70,7 +70,7 @@ def validate_feature_engineering():
         # Test with small data sample
         data_path = Path("data/marketing_campaign.csv")
         if not data_path.exists():
-            logger.error(f"❌ Data file not found: {data_path}")
+            logger.error(f" Data file not found: {data_path}")
             return False
         
         # Load small sample
@@ -79,7 +79,7 @@ def validate_feature_engineering():
         
         # Test pipeline creation
         pipeline = MarketingFeaturePipeline()
-        logger.info("✅ Feature pipeline created")
+        logger.info(" Feature pipeline created")
         
         # Test feature creation
         df_with_features = pipeline.create_features(df)
@@ -87,27 +87,27 @@ def validate_feature_engineering():
         
         for feature in expected_new_features:
             if feature in df_with_features.columns:
-                logger.info(f"✅ {feature} created successfully")
+                logger.info(f" {feature} created successfully")
             else:
-                logger.warning(f"⚠️ {feature} not found in features")
+                logger.warning(f" {feature} not found in features")
         
         # Test full pipeline preparation (small sample)
         try:
             data = prepare_data_for_training(data_path, test_size=0.2, random_state=42)
-            logger.info(f"✅ Pipeline preparation successful")
+            logger.info(f" Pipeline preparation successful")
             logger.info(f"📊 Train: {data['X_train'].shape}, Test: {data['X_test'].shape}")
             logger.info(f"🔧 Features: {len(data['feature_names'])}")
             
             return True
         except Exception as e:
-            logger.error(f"❌ Error in pipeline preparation: {str(e)}")
+            logger.error(f" Error in pipeline preparation: {str(e)}")
             return False
         
     except ImportError as e:
-        logger.error(f"❌ Import error: {str(e)}")
+        logger.error(f" Import error: {str(e)}")
         return False
     except Exception as e:
-        logger.error(f"❌ Error in feature engineering: {str(e)}")
+        logger.error(f" Error in feature engineering: {str(e)}")
         return False
 
 def validate_third_tuning_import():
@@ -116,10 +116,10 @@ def validate_third_tuning_import():
     
     try:
         from pipeline.third_tuning import run_third_tuning
-        logger.info("✅ Third tuning module imported successfully")
+        logger.info(" Third tuning module imported successfully")
         return True
     except ImportError as e:
-        logger.error(f"❌ Third tuning import error: {str(e)}")
+        logger.error(f" Third tuning import error: {str(e)}")
         return False
 
 def validate_temperature_calibration_import():
@@ -131,7 +131,7 @@ def validate_temperature_calibration_import():
         
         # Test calibrator creation
         calibrator = TemperatureScalingCalibrator()
-        logger.info("✅ Temperature calibrator created successfully")
+        logger.info(" Temperature calibrator created successfully")
         
         # Test with dummy data
         np.random.seed(42)
@@ -140,19 +140,19 @@ def validate_temperature_calibration_import():
         
         # Test fitting
         calibrator.fit(dummy_probs, dummy_labels)
-        logger.info(f"✅ Calibrator fitted. Temperature: {calibrator.temperature:.4f}")
+        logger.info(f" Calibrator fitted. Temperature: {calibrator.temperature:.4f}")
         
         # Test prediction
         calibrated_probs = calibrator.predict_proba(dummy_probs)
-        logger.info(f"✅ Calibration predictions generated: {calibrated_probs.shape}")
+        logger.info(f" Calibration predictions generated: {calibrated_probs.shape}")
         
         return True
         
     except ImportError as e:
-        logger.error(f"❌ Temperature calibration import error: {str(e)}")
+        logger.error(f" Temperature calibration import error: {str(e)}")
         return False
     except Exception as e:
-        logger.error(f"❌ Temperature calibration error: {str(e)}")
+        logger.error(f" Temperature calibration error: {str(e)}")
         return False
 
 def validate_pipeline_orchestrator():
@@ -167,15 +167,15 @@ def validate_pipeline_orchestrator():
         artifacts_dir = Path("test_artifacts")
         
         orchestrator = MLOpsPipelineOrchestrator(data_path, artifacts_dir)
-        logger.info("✅ Pipeline orchestrator created successfully")
+        logger.info(" Pipeline orchestrator created successfully")
         
         return True
         
     except ImportError as e:
-        logger.error(f"❌ Pipeline orchestrator import error: {str(e)}")
+        logger.error(f" Pipeline orchestrator import error: {str(e)}")
         return False
     except Exception as e:
-        logger.error(f"❌ Pipeline orchestrator error: {str(e)}")
+        logger.error(f" Pipeline orchestrator error: {str(e)}")
         return False
 
 def main():
@@ -201,11 +201,11 @@ def main():
             result = test_func()
             results[test_name] = result
             if result:
-                logger.info(f"✅ {test_name}: PASSED")
+                logger.info(f" {test_name}: PASSED")
             else:
-                logger.error(f"❌ {test_name}: FAILED")
+                logger.error(f" {test_name}: FAILED")
         except Exception as e:
-            logger.error(f"❌ {test_name}: ERROR - {str(e)}")
+            logger.error(f" {test_name}: ERROR - {str(e)}")
             results[test_name] = False
     
     # Summary
@@ -217,7 +217,7 @@ def main():
     total = len(results)
     
     for test_name, result in results.items():
-        status = "✅ PASS" if result else "❌ FAIL"
+        status = " PASS" if result else " FAIL"
         logger.info(f"{test_name}: {status}")
     
     logger.info(f"\nResults: {passed}/{total} tests passed")
@@ -227,7 +227,7 @@ def main():
         logger.info("💡 You can now run the full pipeline with:")
         logger.info("   python pipeline/run_pipeline.py --data-path data/marketing_campaign.csv")
     else:
-        logger.error("⚠️ Some validation tests failed. Review errors before running full pipeline.")
+        logger.error(" Some validation tests failed. Review errors before running full pipeline.")
     
     return passed == total
 

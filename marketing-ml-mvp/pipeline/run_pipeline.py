@@ -99,7 +99,7 @@ class MLOpsPipelineOrchestrator:
             duration = self.end_time - self.start_time
             
             logger.info("=" * 60)
-            logger.info(f"✅ PIPELINE COMPLETADO EN {duration}")
+            logger.info(f"PIPELINE COMPLETADO EN {duration}")
             logger.info(f"🏆 ROC-AUC Final: {final_model_results['test_metrics']['roc_auc']:.4f}")
             logger.info(f"🎯 Threshold Óptimo: {final_model_results['optimal_threshold']:.4f}")
             logger.info(f"🌡️ Temperatura: {calibration_results.temperature:.4f}")
@@ -108,7 +108,7 @@ class MLOpsPipelineOrchestrator:
             return final_summary
             
         except Exception as e:
-            logger.error(f"❌ ERROR EN PIPELINE: {str(e)}")
+            logger.error(f"ERROR EN PIPELINE: {str(e)}")
             raise
     
     def _run_feature_engineering(self, test_size: float) -> Dict[str, Any]:
@@ -118,10 +118,10 @@ class MLOpsPipelineOrchestrator:
         logger.info(f"Procesando datos desde: {self.data_path}")
         
         # Preparar datos
-        data = prepare_data_for_training(self.data_path, test_size=test_size, sample_fraction=0.05)
+        data = prepare_data_for_training(self.data_path, test_size=test_size, sample_fraction=1.0)
         
-        logger.info(f"✅ Features: {len(data['feature_names'])}")
-        logger.info(f"✅ Train: {data['X_train'].shape}, Test: {data['X_test'].shape}")
+        logger.info(f"Features: {len(data['feature_names'])}")
+        logger.info(f"Train: {data['X_train'].shape}, Test: {data['X_test'].shape}")
         
         self.pipeline_results['feature_engineering'] = {
             'n_features': len(data['feature_names']),
@@ -146,7 +146,7 @@ class MLOpsPipelineOrchestrator:
             stratify=data['y_train']
         )
         
-        logger.info(f"✅ Train: {X_train_split.shape}, Val: {X_val.shape}")
+        logger.info(f"Train: {X_train_split.shape}, Val: {X_val.shape}")
         
         return {
             'X_train': X_train_split,
@@ -166,8 +166,8 @@ class MLOpsPipelineOrchestrator:
             self.artifacts_dir
         )
         
-        logger.info(f"✅ Mejor ROC-AUC: {tuning_results['best_score']:.4f}")
-        logger.info(f"✅ Threshold óptimo: {tuning_results['optimal_threshold']:.4f}")
+        logger.info(f"Mejor ROC-AUC: {tuning_results['best_score']:.4f}")
+        logger.info(f"Threshold óptimo: {tuning_results['optimal_threshold']:.4f}")
         
         self.pipeline_results['third_tuning'] = tuning_results
         
@@ -186,8 +186,8 @@ class MLOpsPipelineOrchestrator:
             optimal_threshold=tuning_results['optimal_threshold']
         )
         
-        logger.info(f"✅ ROC-AUC Test: {final_results['test_metrics']['roc_auc']:.4f}")
-        logger.info(f"✅ F1 Score (óptimo): {final_results['test_metrics']['f1_optimal']:.4f}")
+        logger.info(f"ROC-AUC Test: {final_results['test_metrics']['roc_auc']:.4f}")
+        logger.info(f"F1 Score (óptimo): {final_results['test_metrics']['f1_optimal']:.4f}")
         
         self.pipeline_results['final_training'] = final_results
         
@@ -204,8 +204,8 @@ class MLOpsPipelineOrchestrator:
             self.artifacts_dir
         )
         
-        logger.info(f"✅ Temperatura: {calibrator.temperature:.4f}")
-        logger.info(f"✅ Mejora Brier: {calibrator.calibration_metrics['brier_improvement']:.4f}")
+        logger.info(f"Temperatura: {calibrator.temperature:.4f}")
+        logger.info(f"Mejora Brier: {calibrator.calibration_metrics['brier_improvement']:.4f}")
         
         self.pipeline_results['calibration'] = {
             'temperature': calibrator.temperature,
@@ -226,8 +226,8 @@ class MLOpsPipelineOrchestrator:
         )
         
         top_5_features = list(shap_results['feature_importance'].keys())[:5]
-        logger.info(f"✅ Top 5 features: {top_5_features}")
-        logger.info(f"✅ Expected value: {shap_results['expected_value']:.4f}")
+        logger.info(f"Top 5 features: {top_5_features}")
+        logger.info(f"Expected value: {shap_results['expected_value']:.4f}")
         
         self.pipeline_results['shap_analysis'] = {
             'top_features': top_5_features,
@@ -320,7 +320,7 @@ def main():
     
     # Validar archivo de datos
     if not data_path.exists():
-        logger.error(f"❌ Archivo de datos no encontrado: {data_path}")
+        logger.error(f"Archivo de datos no encontrado: {data_path}")
         sys.exit(1)
     
     # Crear y ejecutar orquestador
@@ -344,7 +344,7 @@ def main():
         return summary
         
     except Exception as e:
-        logger.error(f"❌ Pipeline falló: {str(e)}")
+        logger.error(f"Pipeline falló: {str(e)}")
         sys.exit(1)
 
 if __name__ == "__main__":

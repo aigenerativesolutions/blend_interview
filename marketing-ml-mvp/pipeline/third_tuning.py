@@ -15,6 +15,7 @@ from pathlib import Path
 import logging
 from typing import Dict, Any, Tuple
 from datetime import datetime
+from .json_utils import safe_json_dump
 
 logger = logging.getLogger(__name__)
 
@@ -106,7 +107,7 @@ class OptunaXGBoostOptimizer:
         Ejecutar optimización con Optuna exactamente como en el notebook
         """
         logger.info("🎯 Iniciando 3er Tuning con Optuna - Metodología Ganadora")
-        logger.info(f"🔄 Optimizando con 10 trials usando TPESampler")
+        logger.info(f"🔄 Optimizando con 100 trials usando TPESampler")
         
         # Calcular scale_pos_weight
         y_train_values = y_train.values if hasattr(y_train, 'values') else y_train
@@ -124,7 +125,7 @@ class OptunaXGBoostOptimizer:
         # Optimizar (reproduce exacto del notebook)
         self.study.optimize(
             lambda trial: self.objective(trial, X_train, y_train),
-            n_trials=10,
+            n_trials=100,
             callbacks=[self._log_callback]
         )
         
@@ -146,7 +147,7 @@ class OptunaXGBoostOptimizer:
             'enable_categorical': True
         })
         
-        logger.info(f"✅ Optimización completada en {duration}")
+        logger.info(f"Optimización completada en {duration}")
         logger.info(f"🏆 Mejor F1-Score: {self.best_score:.4f}")
         logger.info(f"🎯 Mejores parámetros: {self.best_params}")
         
@@ -184,7 +185,7 @@ class OptunaXGBoostOptimizer:
         # Entrenar en todo el conjunto
         best_model.fit(X_train, y_train)
         
-        logger.info("✅ Modelo final entrenado")
+        logger.info("Modelo final entrenado")
         return best_model
     
     def save_results(self, artifacts_dir: Path) -> None:
@@ -198,8 +199,16 @@ class OptunaXGBoostOptimizer:
         
         # 1. Guardar mejores parámetros
         best_params_file = artifacts_dir / "best_params_optuna.json"
+        # Convert numpy types to Python types for JSON serialization
+        serializable_params = {}
+        for key, value in self.best_params.items():
+            if hasattr(value, 'item'):  # numpy scalar
+                serializable_params[key] = value.item()
+            else:
+                serializable_params[key] = value
+        
         with open(best_params_file, 'w') as f:
-            json.dump(self.best_params, f, indent=2)
+            safe_json_dump(serializable_params, f, indent=2)
         logger.info(f"💾 Mejores parámetros guardados en {best_params_file}")
         
         # 2. Guardar estudio completo de Optuna
@@ -221,7 +230,7 @@ class OptunaXGBoostOptimizer:
         
         results_file = artifacts_dir / "optuna_results.json"
         with open(results_file, 'w') as f:
-            json.dump(results_summary, f, indent=2)
+            safe_json_dump(results_summary, f, indent=2)
         logger.info(f"📈 Resumen completo guardado en {results_file}")
         
         # 4. Guardar histórico de trials
@@ -258,7 +267,7 @@ def find_optimal_threshold(model, X_val: pd.DataFrame, y_val: pd.DataFrame) -> T
         'roc_auc': float(roc_auc_score(y_val, y_proba))
     }
     
-    logger.info(f"✅ Threshold óptimo: {optimal_threshold:.4f}")
+    logger.info(f"Threshold óptimo: {optimal_threshold:.4f}")
     logger.info(f"📊 F1-score óptimo: {metrics['optimal_f1']:.4f}")
     logger.info(f"🎯 ROC-AUC: {metrics['roc_auc']:.4f}")
     
@@ -303,14 +312,14 @@ def run_third_tuning(X_train: pd.DataFrame, y_train: pd.DataFrame,
     # 7. Guardar threshold óptimo
     threshold_file = artifacts_dir / "optimal_threshold_optuna.json"
     with open(threshold_file, 'w') as f:
-        json.dump({
+        safe_json_dump({
             'threshold': optimal_threshold,
             'metrics': threshold_metrics,
             'timestamp': datetime.now().isoformat()
         }, f, indent=2)
     logger.info(f"🎯 Threshold óptimo guardado en {threshold_file}")
     
-    logger.info("✅ Pipeline completo del 3er tuning con Optuna completado")
+    logger.info("Pipeline completo del 3er tuning con Optuna completado")
     
     return complete_results
 

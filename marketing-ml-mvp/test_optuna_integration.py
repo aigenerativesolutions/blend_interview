@@ -36,11 +36,11 @@ def test_optuna_optimizer():
         
         # Test optimizer creation
         optimizer = OptunaXGBoostOptimizer()
-        logger.info("✅ Optimizer created successfully")
+        logger.info(" Optimizer created successfully")
         
         # Test scale_pos_weight calculation
         scale_weight = optimizer.calculate_scale_pos_weight(y_train.values)
-        logger.info(f"✅ Scale pos weight calculated: {scale_weight:.4f}")
+        logger.info(f" Scale pos weight calculated: {scale_weight:.4f}")
         
         # Test with minimal trials (2 trials only for speed)
         logger.info("🔄 Testing optimization with 2 trials...")
@@ -83,26 +83,26 @@ def test_optuna_optimizer():
         
         # Run quick test
         results = quick_optimize(X_train, y_train)
-        logger.info(f"✅ Optimization completed with {results['n_trials']} trials")
+        logger.info(f" Optimization completed with {results['n_trials']} trials")
         logger.info(f"📊 Best F1-Score: {results['best_score']:.4f}")
         
         # Test best model creation
         best_model = optimizer.get_best_model(X_train, y_train)
-        logger.info("✅ Best model created successfully")
+        logger.info(" Best model created successfully")
         
         # Test predictions
         predictions = best_model.predict(X_train)
         probabilities = best_model.predict_proba(X_train)
-        logger.info(f"✅ Predictions generated: {predictions.shape}")
-        logger.info(f"✅ Probabilities generated: {probabilities.shape}")
+        logger.info(f" Predictions generated: {predictions.shape}")
+        logger.info(f" Probabilities generated: {probabilities.shape}")
         
         return True
         
     except ImportError as e:
-        logger.error(f"❌ Import error: {str(e)}")
+        logger.error(f" Import error: {str(e)}")
         return False
     except Exception as e:
-        logger.error(f"❌ Error in Optuna optimizer test: {str(e)}")
+        logger.error(f" Error in Optuna optimizer test: {str(e)}")
         import traceback
         traceback.print_exc()
         return False
@@ -117,7 +117,7 @@ def test_feature_engineering_integration():
         # Check if data exists
         data_path = Path("data/marketing_campaign.csv")
         if not data_path.exists():
-            logger.warning(f"⚠️ Data file not found: {data_path}")
+            logger.warning(f" Data file not found: {data_path}")
             return True  # Skip test, not failure
         
         # Test with small sample
@@ -134,9 +134,9 @@ def test_feature_engineering_integration():
         
         for feature in expected_features:
             if feature in df_with_features.columns:
-                logger.info(f"✅ {feature} created successfully")
+                logger.info(f" {feature} created successfully")
             else:
-                logger.error(f"❌ {feature} not found")
+                logger.error(f" {feature} not found")
                 return False
         
         # Test categorical encoding
@@ -146,24 +146,24 @@ def test_feature_engineering_integration():
         # Check Education is numeric
         if 'Education' in X_encoded.columns:
             if X_encoded['Education'].dtype in ['int64', 'int32']:
-                logger.info("✅ Education properly encoded to numeric")
+                logger.info(" Education properly encoded to numeric")
             else:
-                logger.error(f"❌ Education not numeric: {X_encoded['Education'].dtype}")
+                logger.error(f" Education not numeric: {X_encoded['Education'].dtype}")
                 return False
         
         # Check Marital_Status is categorical
         if 'Marital_Status' in X_encoded.columns:
             if X_encoded['Marital_Status'].dtype.name == 'category':
-                logger.info("✅ Marital_Status properly encoded to categorical")
+                logger.info(" Marital_Status properly encoded to categorical")
             else:
-                logger.error(f"❌ Marital_Status not categorical: {X_encoded['Marital_Status'].dtype}")
+                logger.error(f" Marital_Status not categorical: {X_encoded['Marital_Status'].dtype}")
                 return False
         
-        logger.info("✅ Feature engineering integration test passed")
+        logger.info(" Feature engineering integration test passed")
         return True
         
     except Exception as e:
-        logger.error(f"❌ Error in feature engineering integration: {str(e)}")
+        logger.error(f" Error in feature engineering integration: {str(e)}")
         import traceback
         traceback.print_exc()
         return False
@@ -188,11 +188,11 @@ def main():
             result = test_func()
             results[test_name] = result
             if result:
-                logger.info(f"✅ {test_name}: PASSED")
+                logger.info(f" {test_name}: PASSED")
             else:
-                logger.error(f"❌ {test_name}: FAILED")
+                logger.error(f" {test_name}: FAILED")
         except Exception as e:
-            logger.error(f"❌ {test_name}: ERROR - {str(e)}")
+            logger.error(f" {test_name}: ERROR - {str(e)}")
             results[test_name] = False
     
     # Summary
@@ -204,7 +204,7 @@ def main():
     total = len(results)
     
     for test_name, result in results.items():
-        status = "✅ PASS" if result else "❌ FAIL"
+        status = " PASS" if result else " FAIL"
         logger.info(f"{test_name}: {status}")
     
     logger.info(f"\nResults: {passed}/{total} tests passed")
@@ -214,7 +214,7 @@ def main():
         logger.info("💡 Now you can run the full pipeline with:")
         logger.info("   python quick_start.py")
     else:
-        logger.error("⚠️ Some integration tests failed. Review errors before running full pipeline.")
+        logger.error(" Some integration tests failed. Review errors before running full pipeline.")
     
     return passed == total
 

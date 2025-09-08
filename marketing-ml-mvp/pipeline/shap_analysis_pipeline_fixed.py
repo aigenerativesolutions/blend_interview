@@ -49,7 +49,7 @@ class SHAPAnalysisPipeline:
             self.expected_value = self.expected_value[1] if len(self.expected_value) > 1 else self.expected_value[0]
         
         self.is_fitted = True
-        logger.info(f"✅ SHAP explainer creado. Expected value: {self.expected_value:.4f}")
+        logger.info(f"SHAP explainer creado. Expected value: {self.expected_value:.4f}")
     
     def calculate_shap_values(self, X: np.ndarray) -> np.ndarray:
         """
@@ -72,7 +72,7 @@ class SHAPAnalysisPipeline:
             shap_values = shap_values[1] if len(shap_values) > 1 else shap_values[0]
         
         self.shap_values = shap_values
-        logger.info(f"✅ SHAP values calculados. Shape: {shap_values.shape}")
+        logger.info(f"SHAP values calculados. Shape: {shap_values.shape}")
         
         return shap_values
     
@@ -161,7 +161,7 @@ class SHAPAnalysisPipeline:
                 'mean_negative_shap': float(np.mean(feature_shap_values[negative_mask])) if np.any(negative_mask) else 0.0
             }
         
-        logger.info(f"✅ Top valores SHAP extraídos para {len(self.feature_names)} features")
+        logger.info(f"Top valores SHAP extraídos para {len(self.feature_names)} features")
         return feature_analysis
     
     def analyze_feature_interactions(self, X: np.ndarray, top_features: int = 7) -> Dict[str, Dict]:
@@ -230,7 +230,7 @@ class SHAPAnalysisPipeline:
                         'quadrant_analysis': quadrant_analysis
                     }
         
-        logger.info(f"✅ Análisis de interdependencias completado para {len(top_feature_names)} features")
+        logger.info(f"Análisis de interdependencias completado para {len(top_feature_names)} features")
         return interactions
     
     def save_analysis_results(self, artifacts_dir: Path, 
@@ -320,7 +320,7 @@ def run_complete_shap_analysis(model, X: np.ndarray, feature_names: List[str],
     # 4. Guardar resultados (incluyendo top valores e interdependencias)
     shap_pipeline.save_analysis_results(artifacts_dir, feature_importance)
     
-    logger.info("✅ Análisis completo de SHAP finalizado")
+    logger.info("Análisis completo de SHAP finalizado")
     
     return {
         'shap_pipeline': shap_pipeline,

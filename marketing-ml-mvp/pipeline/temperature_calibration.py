@@ -75,7 +75,7 @@ class TemperatureScalingCalibrator:
         calibrated_probs = self.predict_proba(probabilities)
         self._calculate_calibration_metrics(probabilities, calibrated_probs, y_true)
         
-        logger.info(f"✅ Calibrador entrenado. Temperatura óptima: {self.temperature:.4f}")
+        logger.info(f"Calibrador entrenado. Temperatura óptima: {self.temperature:.4f}")
         logger.info(f"📊 Log-loss optimizado: {res.fun:.6f}")
         logger.info(f"📊 Brier Score antes: {self.calibration_metrics['brier_before']:.4f}")
         logger.info(f"📊 Brier Score después: {self.calibration_metrics['brier_after']:.4f}")
@@ -276,7 +276,7 @@ def calibrate_model_probabilities(model, X_val: np.ndarray, y_val: np.ndarray,
     with open(metrics_path, 'w') as f:
         json.dump(calibrator.calibration_metrics, f, indent=2)
     
-    logger.info("✅ Calibración completada y guardada")
+    logger.info("Calibración completada y guardada")
     
     return calibrator
 

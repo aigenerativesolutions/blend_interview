@@ -25,7 +25,7 @@ def main():
     data_path = project_root / "data" / "marketing_campaign.csv"
     
     if not data_path.exists():
-        logger.error(f"❌ Dataset not found: {data_path}")
+        logger.error(f" Dataset not found: {data_path}")
         logger.info("💡 Make sure the dataset is in the correct location:")
         logger.info("   data/marketing_campaign.csv")
         return False
@@ -86,9 +86,9 @@ def main():
             if isinstance(filename, str):
                 artifact_path = artifacts_dir / filename
                 if artifact_path.exists():
-                    print(f"   ✅ {artifact_name}: {filename}")
+                    print(f"    {artifact_name}: {filename}")
                 else:
-                    print(f"   ⚠️ {artifact_name}: {filename} (not found)")
+                    print(f"    {artifact_name}: {filename} (not found)")
         
         # Duration
         duration = summary['pipeline_info']['duration_formatted']
@@ -105,11 +105,11 @@ def main():
         return True
         
     except ImportError as e:
-        logger.error(f"❌ Import error: {str(e)}")
+        logger.error(f" Import error: {str(e)}")
         logger.info("💡 Try running: pip install -r requirements.txt")
         return False
     except Exception as e:
-        logger.error(f"❌ Pipeline error: {str(e)}")
+        logger.error(f" Pipeline error: {str(e)}")
         logger.info("💡 Check the logs above for detailed error information")
         logger.info("💡 You can run validate_pipeline.py first to check components")
         return False

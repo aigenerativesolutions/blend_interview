@@ -22,18 +22,18 @@ def test_data_loading():
     data_path = Path("data/marketing_campaign_data.csv")
     
     if not data_path.exists():
-        logger.error(f"❌ Data file not found: {data_path}")
+        logger.error(f" Data file not found: {data_path}")
         return False
     
     try:
         # Try loading with semicolon separator
         df = pd.read_csv(data_path, sep=';')
-        logger.info(f"✅ Data loaded successfully: {df.shape}")
+        logger.info(f" Data loaded successfully: {df.shape}")
         logger.info(f"📊 Columns: {list(df.columns)}")
         
         # Check target column
         if 'Response' not in df.columns:
-            logger.error("❌ Target column 'Response' not found")
+            logger.error(" Target column 'Response' not found")
             return False
         
         logger.info(f"🎯 Target distribution: {df['Response'].value_counts().to_dict()}")
@@ -46,7 +46,7 @@ def test_data_loading():
         return True
         
     except Exception as e:
-        logger.error(f"❌ Error loading data: {str(e)}")
+        logger.error(f" Error loading data: {str(e)}")
         return False
 
 def test_basic_feature_engineering():
@@ -69,20 +69,20 @@ def test_basic_feature_engineering():
         
         # Test feature creation
         df_with_features = pipeline.create_features(df)
-        logger.info(f"✅ Features created: {df_with_features.columns.tolist()}")
+        logger.info(f" Features created: {df_with_features.columns.tolist()}")
         
         # Check for new features
         expected_features = ['Age', 'Total_Spent', 'Customer_Days']
         for feature in expected_features:
             if feature in df_with_features.columns:
-                logger.info(f"✅ {feature}: {df_with_features[feature].describe()}")
+                logger.info(f" {feature}: {df_with_features[feature].describe()}")
             else:
-                logger.warning(f"⚠️ {feature} not found")
+                logger.warning(f" {feature} not found")
         
         return True
         
     except Exception as e:
-        logger.error(f"❌ Error in feature engineering: {str(e)}")
+        logger.error(f" Error in feature engineering: {str(e)}")
         import traceback
         traceback.print_exc()
         return False
@@ -101,13 +101,13 @@ def test_dependencies():
     for package in required_packages:
         try:
             __import__(package)
-            logger.info(f"✅ {package}: OK")
+            logger.info(f" {package}: OK")
         except ImportError:
-            logger.error(f"❌ {package}: MISSING")
+            logger.error(f" {package}: MISSING")
             missing_packages.append(package)
     
     if missing_packages:
-        logger.error(f"❌ Missing packages: {missing_packages}")
+        logger.error(f" Missing packages: {missing_packages}")
         logger.info("💡 Install with: pip install " + " ".join(missing_packages))
         return False
     
@@ -134,11 +134,11 @@ def main():
             result = test_func()
             results[test_name] = result
             if result:
-                logger.info(f"✅ {test_name}: PASSED")
+                logger.info(f" {test_name}: PASSED")
             else:
-                logger.error(f"❌ {test_name}: FAILED")
+                logger.error(f" {test_name}: FAILED")
         except Exception as e:
-            logger.error(f"❌ {test_name}: ERROR - {str(e)}")
+            logger.error(f" {test_name}: ERROR - {str(e)}")
             results[test_name] = False
     
     # Summary
@@ -147,14 +147,14 @@ def main():
     logger.info(f"{'='*50}")
     
     for test_name, result in results.items():
-        status = "✅ PASS" if result else "❌ FAIL"
+        status = " PASS" if result else " FAIL"
         logger.info(f"{test_name}: {status}")
     
     all_passed = all(results.values())
     if all_passed:
         logger.info("🎉 All tests passed! Pipeline should work.")
     else:
-        logger.error("⚠️ Some tests failed. Fix issues before running pipeline.")
+        logger.error(" Some tests failed. Fix issues before running pipeline.")
     
     return all_passed
 

@@ -39,7 +39,7 @@ def main():
     data_path = Path("data/marketing_campaign_data.csv")  # Update this path
     
     if not data_path.exists():
-        logger.error(f"❌ Data file not found: {data_path}")
+        logger.error(f" Data file not found: {data_path}")
         logger.info("Please place your marketing campaign data CSV file in the data/ directory")
         logger.info("Expected columns: Education, Marital_Status, Income, Kidhome, etc.")
         return
@@ -93,7 +93,7 @@ def main():
         metadata_path=metadata_path
     )
     
-    logger.info("✅ Training completed successfully!")
+    logger.info(" Training completed successfully!")
     logger.info(f"📁 Model saved to: {MODELS_PATH}")
     logger.info(f"📊 Model accuracy: {complete_metadata.get('final_metrics', {}).get('accuracy', 'N/A'):.3f}")
     logger.info(f"🎯 Optimal threshold: {complete_metadata.get('optimal_threshold', 'N/A'):.3f}")
@@ -104,5 +104,5 @@ if __name__ == "__main__":
     try:
         main()
     except Exception as e:
-        logger.error(f"❌ Training failed: {str(e)}")
+        logger.error(f" Training failed: {str(e)}")
         sys.exit(1)

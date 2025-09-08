@@ -43,10 +43,10 @@ async def lifespan(app: FastAPI):
     try:
         # Load predictor with all pipeline artifacts
         predictor = load_marketing_predictor()
-        logger.info("✅ Pipeline predictor loaded successfully")
+        logger.info(" Pipeline predictor loaded successfully")
         
     except Exception as e:
-        logger.error(f"❌ Failed to load pipeline predictor during startup: {str(e)}")
+        logger.error(f" Failed to load pipeline predictor during startup: {str(e)}")
         # Could set predictor = None and handle gracefully in endpoints
     
     logger.info("API startup completed")
