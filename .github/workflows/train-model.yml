@@ -40,15 +40,41 @@ jobs:
           echo "[INFO] No relevant changes detected - Skipping training"
         fi
 
+    - name: Validate GCP Secrets
+      if: steps.changes.outputs.training_needed == 'true'
+      run: |
+        if [ -z "${{ secrets.GCP_SA_KEY }}" ]; then
+          echo "[ERROR] GCP_SA_KEY secret is not set or is empty"
+          echo "[INFO] Please check your GitHub repository secrets"
+          exit 1
+        fi
+        echo "[SUCCESS] GCP_SA_KEY secret is configured"
+
     - name: Setup GCP Authentication
       if: steps.changes.outputs.training_needed == 'true'
-      uses: google-github-actions/auth@v1
+      uses: google-github-actions/auth@v2
       with:
         credentials_json: ${{ secrets.GCP_SA_KEY }}
+        project_id: ${{ secrets.GCP_PROJECT_ID }}
 
     - name: Setup Google Cloud SDK
       if: steps.changes.outputs.training_needed == 'true'
-      uses: google-github-actions/setup-gcloud@v1
+      uses: google-github-actions/setup-gcloud@v2
+
+    - name: Verify GCP Authentication
+      if: steps.changes.outputs.training_needed == 'true'
+      run: |
+        echo "[INFO] Testing GCP authentication..."
+        gcloud auth list
+        gcloud config list project
+        
+        # Test access token generation
+        TOKEN=$(gcloud auth print-access-token 2>/dev/null)
+        if [ -z "$TOKEN" ]; then
+          echo "[ERROR] Failed to generate access token"
+          exit 1
+        fi
+        echo "[SUCCESS] GCP authentication verified"
 
     - name: Trigger Training in GCP
       if: steps.changes.outputs.training_needed == 'true'
