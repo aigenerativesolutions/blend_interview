@@ -115,7 +115,6 @@ jobs:
         HTTP_CODE=$(curl -s -w "%{http_code}" -o response.json \
           -X POST "${{ env.TRAINING_FUNCTION_URL }}" \
           -H "Content-Type: application/json" \
-          -H "Authorization: Bearer $(gcloud auth print-access-token)" \
           -d @payload.json)
         
         echo "[DEBUG] HTTP Response Code: $HTTP_CODE"
