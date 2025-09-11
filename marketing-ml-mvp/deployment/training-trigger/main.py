@@ -28,6 +28,20 @@ def create_training_instance(request):
     """
     
     try:
+        # Enable CORS for all requests
+        if request.method == 'OPTIONS':
+            headers = {
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': 'POST',
+                'Access-Control-Allow-Headers': 'Content-Type',
+                'Access-Control-Max-Age': '3600'
+            }
+            return ('', 204, headers)
+        
+        # Set CORS headers for the main request
+        headers = {
+            'Access-Control-Allow-Origin': '*'
+        }
         # Parse request
         request_json = request.get_json(silent=True)
         request_args = request.args
@@ -123,7 +137,7 @@ def create_training_instance(request):
         blob = bucket.blob(f"training-jobs/{timestamp}/metadata.json")
         blob.upload_from_string(json.dumps(training_metadata, indent=2))
         
-        return {
+        return ({
             "status": "success",
             "message": f"Training instance {instance_name} creation initiated",
             "job_id": f"training-{timestamp}",
@@ -132,15 +146,15 @@ def create_training_instance(request):
             "operation": operation.name,
             "estimated_duration": "15-30 minutes",
             "monitoring": f"gcloud compute instances describe {instance_name} --zone={ZONE}"
-        }, 200
+        }, 200, headers)
         
     except Exception as e:
         logger.error(f"❌ Error creating training instance: {str(e)}")
-        return {
+        return ({
             "status": "error",
             "message": f"Failed to create training instance: {str(e)}",
             "timestamp": datetime.utcnow().isoformat()
-        }, 500
+        }, 500, {'Access-Control-Allow-Origin': '*'})
 
 def get_training_status(request):
     """

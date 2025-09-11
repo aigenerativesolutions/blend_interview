@@ -34,13 +34,12 @@ def main():
     logger.info("📊 Loading and preprocessing data...")
     preprocessor = MarketingDataPreprocessor()
     
-    # You'll need to provide the actual data file path
-    # For now, we'll create a placeholder that shows the expected structure
-    data_path = Path("data/marketing_campaign_data.csv")  # Update this path
+    # Load training data (80% of original dataset)
+    data_path = Path("data/train_data.csv")
     
     if not data_path.exists():
-        logger.error(f" Data file not found: {data_path}")
-        logger.info("Please place your marketing campaign data CSV file in the data/ directory")
+        logger.error(f"❌ Train data file not found: {data_path}")
+        logger.info("Please run split_data.py first to generate train_data.csv from the original dataset")
         logger.info("Expected columns: Education, Marital_Status, Income, Kidhome, etc.")
         return
     
